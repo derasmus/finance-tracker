@@ -9,8 +9,16 @@ export function SpendingChart() {
   const chartData = getCategoryBreakdown(state.transactions);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-      <h2 className="text-base font-semibold text-gray-800 mb-4">Spending by Category</h2>
+    <div
+      className="rounded-2xl p-6"
+      style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+    >
+      <h2
+        className="text-sm font-semibold uppercase mb-4"
+        style={{ color: 'var(--ink-2)', letterSpacing: '0.08em' }}
+      >
+        Spending by Category
+      </h2>
       {chartData.length === 0 ? (
         <EmptyState message="Add some expenses to see the breakdown." />
       ) : (
@@ -32,12 +40,22 @@ export function SpendingChart() {
             </Pie>
             <Tooltip
               formatter={(value) => [formatCurrency(value as number), 'Amount']}
+              contentStyle={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '0.8125rem',
+                border: '1px solid var(--border)',
+                borderRadius: '10px',
+                boxShadow: 'none',
+                color: 'var(--ink)',
+              }}
             />
             <Legend
               iconType="circle"
-              iconSize={8}
+              iconSize={7}
               formatter={(value) => (
-                <span className="text-xs text-gray-600">{value}</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--ink-2)', fontFamily: 'var(--font-display)' }}>
+                  {value}
+                </span>
               )}
             />
           </PieChart>

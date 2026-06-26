@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PlusCircle } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import type { Category, TransactionType } from '../types';
 import {
   INCOME_CATEGORIES,
@@ -47,82 +47,144 @@ export function TransactionForm() {
     setCategory(categories[0]);
   };
 
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-      <h2 className="text-base font-semibold text-gray-800 mb-4">Add Transaction</h2>
+  const activeColor = type === 'expense' ? 'var(--rose)' : 'var(--teal)';
+  const activeShadow =
+    type === 'expense'
+      ? '0 1px 4px rgba(220,38,38,0.25)'
+      : '0 1px 4px rgba(13,148,136,0.25)';
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <div className="flex rounded-xl overflow-hidden border border-gray-200">
+  return (
+    <div
+      className="rounded-2xl p-6"
+      style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+    >
+      <h2
+        className="text-sm font-semibold uppercase mb-5"
+        style={{ color: 'var(--ink-2)', letterSpacing: '0.08em' }}
+      >
+        Add Transaction
+      </h2>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {/* Type toggle */}
+        <div
+          className="flex rounded-xl p-1 gap-1"
+          style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)' }}
+        >
           <button
             type="button"
             onClick={() => setType('expense')}
-            className={`flex-1 py-2 text-sm font-medium transition-colors ${
+            className="flex-1 py-2 text-sm font-semibold rounded-lg transition-all"
+            style={
               type === 'expense'
-                ? 'bg-red-500 text-white'
-                : 'bg-white text-gray-500 hover:bg-gray-50'
-            }`}
+                ? { background: activeColor, color: 'white', boxShadow: activeShadow }
+                : { background: 'transparent', color: 'var(--ink-2)' }
+            }
           >
             Expense
           </button>
           <button
             type="button"
             onClick={() => setType('income')}
-            className={`flex-1 py-2 text-sm font-medium transition-colors ${
+            className="flex-1 py-2 text-sm font-semibold rounded-lg transition-all"
+            style={
               type === 'income'
-                ? 'bg-green-500 text-white'
-                : 'bg-white text-gray-500 hover:bg-gray-50'
-            }`}
+                ? { background: activeColor, color: 'white', boxShadow: activeShadow }
+                : { background: 'transparent', color: 'var(--ink-2)' }
+            }
           >
             Income
           </button>
         </div>
 
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
-        />
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="txn-description"
+            className="text-xs font-semibold uppercase"
+            style={{ color: 'var(--ink-2)', letterSpacing: '0.07em' }}
+          >
+            Description
+          </label>
+          <input
+            id="txn-description"
+            type="text"
+            placeholder="e.g. Grocery shopping"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            className="w-full px-3 py-2.5 rounded-xl field-input"
+          />
+        </div>
 
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          min="0.01"
-          step="0.01"
-          required
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
-        />
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="txn-amount"
+            className="text-xs font-semibold uppercase"
+            style={{ color: 'var(--ink-2)', letterSpacing: '0.07em' }}
+          >
+            Amount
+          </label>
+          <input
+            id="txn-amount"
+            type="number"
+            placeholder="0.00"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            min="0.01"
+            step="0.01"
+            required
+            className="w-full px-3 py-2.5 rounded-xl field-input"
+            style={{ fontFamily: 'var(--font-mono)' }}
+          />
+        </div>
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value as Category)}
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 bg-white"
-        >
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {CATEGORY_LABELS[cat]}
-            </option>
-          ))}
-        </select>
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="txn-category"
+            className="text-xs font-semibold uppercase"
+            style={{ color: 'var(--ink-2)', letterSpacing: '0.07em' }}
+          >
+            Category
+          </label>
+          <select
+            id="txn-category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value as Category)}
+            className="w-full px-3 py-2.5 rounded-xl field-input"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {CATEGORY_LABELS[cat]}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
-        />
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="txn-date"
+            className="text-xs font-semibold uppercase"
+            style={{ color: 'var(--ink-2)', letterSpacing: '0.07em' }}
+          >
+            Date
+          </label>
+          <input
+            id="txn-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+            className="w-full px-3 py-2.5 rounded-xl field-input"
+          />
+        </div>
 
         <button
           type="submit"
-          className="flex items-center justify-center gap-2 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition-colors"
+          className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90 active:opacity-80 mt-1"
+          style={{ background: 'var(--indigo)' }}
         >
-          <PlusCircle size={16} />
-          Add Transaction
+          <Plus size={16} />
+          Record Transaction
         </button>
       </form>
     </div>

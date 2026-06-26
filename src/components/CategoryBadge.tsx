@@ -6,10 +6,14 @@ interface CategoryBadgeProps {
 }
 
 export function CategoryBadge({ category }: CategoryBadgeProps) {
+  const color = CATEGORY_COLORS[category];
   return (
     <span
-      className="text-xs font-medium px-2 py-0.5 rounded-full text-white"
-      style={{ backgroundColor: CATEGORY_COLORS[category] }}
+      className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-md"
+      style={{
+        color,
+        background: `${color}18`,
+      }}
     >
       {CATEGORY_LABELS[category]}
     </span>

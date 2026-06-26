@@ -17,22 +17,39 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
   });
 
   const isIncome = transaction.type === 'income';
+  const accentColor = isIncome ? 'var(--teal)' : 'var(--rose)';
+  const amountColor = isIncome ? 'var(--teal)' : 'var(--rose)';
 
   return (
-    <div className="flex items-center gap-3 py-3 px-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-      <span className="text-xs text-gray-400 w-14 shrink-0">{formattedDate}</span>
+    <div
+      className="flex items-center gap-4 py-3.5 px-5 border-b last:border-0 transition-colors"
+      style={{ borderColor: 'var(--border)' }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--surface-alt)')}
+      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+    >
+      <div
+        className="w-0.5 h-8 rounded-full shrink-0"
+        style={{ background: accentColor }}
+      />
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-800 truncate">{transaction.description}</p>
-        <div className="mt-0.5">
+        <p
+          className="text-sm font-semibold truncate"
+          style={{ color: 'var(--ink)' }}
+        >
+          {transaction.description}
+        </p>
+        <div className="mt-1 flex items-center gap-2">
           <CategoryBadge category={transaction.category} />
+          <span className="text-xs" style={{ color: 'var(--ink-3)' }}>
+            {formattedDate}
+          </span>
         </div>
       </div>
 
       <span
-        className={`text-sm font-semibold shrink-0 ${
-          isIncome ? 'text-green-600' : 'text-red-500'
-        }`}
+        className="text-sm font-medium tabular-nums shrink-0"
+        style={{ fontFamily: 'var(--font-mono)', color: amountColor }}
       >
         {isIncome ? '+' : '−'}
         {formatCurrency(transaction.amount)}
@@ -40,10 +57,19 @@ export function TransactionItem({ transaction }: TransactionItemProps) {
 
       <button
         onClick={() => dispatch({ type: 'DELETE_TRANSACTION', payload: transaction.id })}
-        className="text-gray-300 hover:text-red-400 transition-colors shrink-0"
+        className="shrink-0 p-1.5 rounded-lg transition-colors"
+        style={{ color: 'var(--ink-3)' }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.color = 'var(--rose)';
+          (e.currentTarget as HTMLButtonElement).style.background = 'var(--rose-light)';
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-3)';
+          (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+        }}
         aria-label="Delete transaction"
       >
-        <Trash2 size={16} />
+        <Trash2 size={14} />
       </button>
     </div>
   );
