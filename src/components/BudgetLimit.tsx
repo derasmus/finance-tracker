@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Target, Pencil, X, Check, AlertTriangle } from 'lucide-react';
 import { useTransactions } from '../context/TransactionContext';
 import { getTotalExpenses } from '../utils/calculations';
@@ -11,6 +11,14 @@ export function BudgetLimit() {
 
   const [editing, setEditing] = useState(budgetLimit === null);
   const [inputValue, setInputValue] = useState(budgetLimit !== null ? String(budgetLimit) : '');
+
+  // Sync local state when budgetLimit loads from localStorage (async context hydration)
+  useEffect(() => {
+    if (budgetLimit !== null) {
+      setEditing(false);
+      setInputValue(String(budgetLimit));
+    }
+  }, [budgetLimit]);
 
   const handleSave = () => {
     const parsed = parseFloat(inputValue);

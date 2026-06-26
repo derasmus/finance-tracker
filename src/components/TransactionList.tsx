@@ -5,7 +5,9 @@ import { EmptyState } from './EmptyState';
 export function TransactionList() {
   const { state } = useTransactions();
 
-  const sorted = [...state.transactions].sort((a, b) => b.createdAt - a.createdAt);
+  const sorted = [...state.transactions].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime() || b.createdAt - a.createdAt
+  );
 
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100">

@@ -21,7 +21,7 @@ export function TransactionForm() {
 
   useEffect(() => {
     setCategory(categories[0]);
-  }, [type]);
+  }, [type, categories]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

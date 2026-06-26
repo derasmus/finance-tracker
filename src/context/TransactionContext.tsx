@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 import type { ReactNode } from 'react';
-import type { AppState, Action, Transaction } from '../types';
+import type { AppState, Action } from '../types';
 import { STORAGE_KEY, BUDGET_STORAGE_KEY } from '../utils/constants';
 
 function transactionReducer(state: AppState, action: Action): AppState {
@@ -18,6 +18,25 @@ function transactionReducer(state: AppState, action: Action): AppState {
   }
 }
 
+function loadInitialState(): AppState {
+  let transactions: AppState['transactions'] = [];
+  let budgetLimit: AppState['budgetLimit'] = null;
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) transactions = JSON.parse(raw);
+  } catch { /* ignore */ }
+
+  try {
+    const rawBudget = localStorage.getItem(BUDGET_STORAGE_KEY);
+    if (rawBudget !== null && rawBudget !== 'null') {
+      budgetLimit = JSON.parse(rawBudget);
+    }
+  } catch { /* ignore */ }
+
+  return { transactions, budgetLimit };
+}
+
 interface TransactionContextValue {
   state: AppState;
   dispatch: React.Dispatch<Action>;
@@ -26,39 +45,18 @@ interface TransactionContextValue {
 const TransactionContext = createContext<TransactionContextValue | null>(null);
 
 export function TransactionProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(transactionReducer, {
-    transactions: [],
-    budgetLimit: null,
-  });
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed: Transaction[] = JSON.parse(raw);
-        dispatch({ type: 'LOAD_TRANSACTIONS', payload: parsed });
-      }
-    } catch {
-      // ignore parse errors
-    }
-
-    try {
-      const rawBudget = localStorage.getItem(BUDGET_STORAGE_KEY);
-      if (rawBudget !== null) {
-        const parsed = JSON.parse(rawBudget) as number | null;
-        dispatch({ type: 'SET_BUDGET', payload: parsed });
-      }
-    } catch {
-      // ignore parse errors
-    }
-  }, []);
+  const [state, dispatch] = useReducer(transactionReducer, undefined, loadInitialState);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.transactions));
   }, [state.transactions]);
 
   useEffect(() => {
-    localStorage.setItem(BUDGET_STORAGE_KEY, JSON.stringify(state.budgetLimit));
+    if (state.budgetLimit === null) {
+      localStorage.removeItem(BUDGET_STORAGE_KEY);
+    } else {
+      localStorage.setItem(BUDGET_STORAGE_KEY, JSON.stringify(state.budgetLimit));
+    }
   }, [state.budgetLimit]);
 
   return (
