@@ -10,8 +10,12 @@ export function HeaderBalance() {
   return (
     <div className="text-right">
       <p
-        className="text-xs font-semibold uppercase"
-        style={{ color: 'var(--ink-2)', letterSpacing: '0.1em' }}
+        className="text-xs font-bold uppercase"
+        style={{
+          color: 'var(--ink-2)',
+          letterSpacing: '0.12em',
+          fontFamily: 'var(--font-heading)',
+        }}
       >
         Net Balance
       </p>
@@ -22,6 +26,9 @@ export function HeaderBalance() {
           fontSize: '1.75rem',
           fontWeight: 500,
           color: isPositive ? 'var(--teal)' : 'var(--rose)',
+          textShadow: isPositive
+            ? '0 0 28px rgba(45, 212, 160, 0.55)'
+            : '0 0 28px rgba(240, 84, 84, 0.55)',
         }}
       >
         {formatCurrency(balance)}

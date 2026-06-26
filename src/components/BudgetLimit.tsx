@@ -53,7 +53,7 @@ export function BudgetLimit() {
   if (budgetLimit === null || editing) {
     return (
       <div
-        className="rounded-2xl p-6"
+        className="rounded-xl p-6"
         style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
       >
         <div className="flex items-center gap-3 mb-5">
@@ -120,7 +120,7 @@ export function BudgetLimit() {
 
   return (
     <div
-      className="rounded-2xl p-6"
+      className="rounded-xl p-6"
       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
       <div className="flex items-center justify-between mb-5">
@@ -168,7 +168,7 @@ export function BudgetLimit() {
             <span style={{ fontFamily: 'var(--font-mono)' }}>{formatCurrency(expenses)} spent</span>
             <span style={{ fontFamily: 'var(--font-mono)' }}>{formatCurrency(budgetLimit)} limit</span>
           </div>
-          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--surface-alt)', border: '1px solid var(--border)' }}>
+          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--surface-2)', border: '1px solid var(--border-2)' }}>
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{ width: `${pct}%`, background: barColor }}

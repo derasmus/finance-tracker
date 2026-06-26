@@ -10,7 +10,7 @@ export function SpendingChart() {
 
   return (
     <div
-      className="rounded-2xl p-6"
+      className="rounded-xl p-6"
       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
       <h2
@@ -43,9 +43,10 @@ export function SpendingChart() {
               contentStyle={{
                 fontFamily: 'var(--font-display)',
                 fontSize: '0.8125rem',
-                border: '1px solid var(--border)',
-                borderRadius: '10px',
-                boxShadow: 'none',
+                background: 'var(--surface-2)',
+                border: '1px solid var(--border-2)',
+                borderRadius: '8px',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                 color: 'var(--ink)',
               }}
             />

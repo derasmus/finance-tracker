@@ -1,24 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg: #EDEEF4;
-  --surface: #FFFFFF;
-  --surface-alt: #F5F6FB;
-  --border: #DDE0ED;
-  --ink: #12141F;
-  --ink-2: #6B7290;
-  --ink-3: #A3A8C0;
-  --indigo: #4F46E5;
-  --indigo-light: rgba(79, 70, 229, 0.1);
-  --teal: #0D9488;
-  --teal-light: #CCFBF1;
-  --rose: #DC2626;
-  --rose-light: #FEE2E2;
-  --amber: #D97706;
-  --amber-light: #FEF3C7;
-  --header: #12141F;
+  --bg: #090A14;
+  --surface: #0E0F1C;
+  --surface-alt: #141627;
+  --surface-2: #1C1E30;
+  --border: #1E2038;
+  --border-2: #282B46;
+
+  --ink: #D4D7EE;
+  --ink-2: #575A7A;
+  --ink-3: #2C2E4A;
+
+  /* Gold — primary accent */
+  --indigo: #E9A84C;
+  --indigo-light: rgba(233, 168, 76, 0.10);
+
+  /* Emerald — income / positive */
+  --teal: #2DD4A0;
+  --teal-light: rgba(45, 212, 160, 0.10);
+
+  /* Coral red — expenses / negative */
+  --rose: #F05454;
+  --rose-light: rgba(240, 84, 84, 0.10);
+
+  /* Amber — warning */
+  --amber: #F0A430;
+  --amber-light: rgba(240, 164, 48, 0.10);
+
+  --header: #06070F;
+
   --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Syne', 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'DM Mono', 'Courier New', monospace;
 }
 
@@ -31,7 +45,7 @@ body {
 
 .field-input {
   background: var(--surface-alt);
-  border: 1.5px solid var(--border);
+  border: 1.5px solid var(--border-2);
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 0.875rem;
@@ -45,12 +59,17 @@ body {
 .field-input:focus {
   outline: none;
   border-color: var(--indigo);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+  box-shadow: 0 0 0 3px rgba(233, 168, 76, 0.14);
+}
+
+.field-input option {
+  background: var(--surface-2);
+  color: var(--ink);
 }
 
 .overflow-y-auto {
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-color: var(--border-2) transparent;
 }
 
 .overflow-y-auto::-webkit-scrollbar {
@@ -62,10 +81,10 @@ body {
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: var(--border-2);
   border-radius: 2px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background-color: #c4c8dc;
+  background-color: var(--ink-3);
 }

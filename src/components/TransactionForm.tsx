@@ -55,7 +55,7 @@ export function TransactionForm() {
 
   return (
     <div
-      className="rounded-2xl p-6"
+      className="rounded-xl p-6"
       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
       <h2

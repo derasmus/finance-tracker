@@ -11,7 +11,7 @@ export function TransactionList() {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden"
+      className="rounded-xl overflow-hidden"
       style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
     >
       <div
